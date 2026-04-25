@@ -13,13 +13,16 @@ def process_order_file(input_file: str = '../../data/orders.txt',
         raw_orders = load_order_from_file(input_file)
         processed_ordres = procces_orders(raw_orders)
         stats = analyze_orders(processed_ordres)
+
+        by_state = stats['by_status']
+        by_status = [f"{k}: {v}" for k, v in by_state.items()]
         """
         Параметр output_file принимает в себя путь файла
         """
         report_lines = [
             f"Обработано заказов: {stats['total_orders']}",
             f"Общая сумма: {stats['total_sum']:.2f} руб.",
-            f"По статусам: {', '.join([f"{k}: {v}" for k, v in stats['by_status'].items()])}",
+            f"По статусам: {', '.join(by_status)}",
             f"Уникальных пользователей: {len(stats['unique_users'])}"
         ]
 
@@ -35,4 +38,4 @@ def process_order_file(input_file: str = '../../data/orders.txt',
     except Exception as e:
         print(f"❌ Ошибка: {e}")
 
-print(process_order_file())
+# print(process_order_file())
